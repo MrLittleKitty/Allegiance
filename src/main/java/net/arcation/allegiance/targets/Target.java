@@ -1,12 +1,17 @@
 package net.arcation.allegiance.targets;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+
+import java.text.DecimalFormat;
 
 /**
  * Created by Mr_Little_Kitty on 2/24/2017.
  */
 public abstract class Target
 {
+    public static final DecimalFormat format = new DecimalFormat("#.00");
+
     private int id;
     public Target(int id)
     {
@@ -19,7 +24,7 @@ public abstract class Target
 
     public abstract int increase(int value, int increaseValue);
 
-    public abstract String getCompletionString();
+    public abstract String getCompletionString(int value);
 
     @Override
     public int hashCode()
