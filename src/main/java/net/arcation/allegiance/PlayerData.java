@@ -2,6 +2,7 @@ package net.arcation.allegiance;
 
 import net.arcation.allegiance.targets.Target;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,10 +14,12 @@ public class PlayerData
     private boolean allegiant;
     private boolean bypassed;
     private HashMap<Target,Integer> targets;
+    private HashMap<String,Object> data;
 
     public PlayerData()
     {
         targets = new HashMap<>();
+        data = new HashMap<>();
         allegiant = false;
         bypassed = false;
     }
@@ -46,6 +49,16 @@ public class PlayerData
             i++;
         }
         return str;
+    }
+
+    public Object getData(String key)
+    {
+        return data.get(key);
+    }
+
+    public void setData(String key, Object data)
+    {
+        this.data.put(key,data);
     }
 
     public double getAllegiantPercent()

@@ -10,7 +10,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerLeashEntityEvent;
+import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -39,7 +43,19 @@ public class Allegiance extends JavaPlugin implements Listener
     }
 
     @EventHandler(priority = EventPriority.LOWEST,ignoreCancelled = true)
-    public void playerJoin(PlayerJoinEvent event)
+    public void playerJoinLoadData(PlayerJoinEvent event)
+    {
+
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
+    public void playerLeaveUnloadData(PlayerQuitEvent event)
+    {
+
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
+    public void playerLeaveUnloadData(PlayerKickEvent event)
     {
 
     }
@@ -73,6 +89,7 @@ public class Allegiance extends JavaPlugin implements Listener
             }
             ConfigurationSection placeTargets = targetSec.getConfigurationSection("place");
         }
+        return null;//TOOD---Remove
     }
 
     private BlockTarget loadBlockTarget(ConfigurationSection section)
