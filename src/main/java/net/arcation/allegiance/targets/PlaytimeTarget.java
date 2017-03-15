@@ -39,4 +39,9 @@ public class PlaytimeTarget extends Target
 	{
 		return String.format("Played %s/%s minutes. %s complete.",value,minutesRequired,Target.format.format(getPercentCompleted(value)*100));
 	}
+
+	public int getMinutesRequired()
+	{
+		return minutesRequired;
+	}
 }

@@ -1,7 +1,7 @@
 package net.arcation.allegiance.listeners;
 
 import net.arcation.allegiance.Allegiance;
-import net.arcation.allegiance.PlayerData;
+import net.arcation.allegiance.data.PlayerData;
 import net.arcation.allegiance.targets.PlaytimeTarget;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,8 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.util.UUID;
 
 /**
  * Created by Mr_Little_Kitty on 3/2/2017.

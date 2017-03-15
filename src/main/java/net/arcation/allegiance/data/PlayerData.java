@@ -1,4 +1,4 @@
-package net.arcation.allegiance;
+package net.arcation.allegiance.data;
 
 import net.arcation.allegiance.targets.Target;
 
@@ -13,7 +13,7 @@ public class PlayerData
 {
     private boolean allegiant;
     private boolean bypassed;
-    private HashMap<Target,Integer> targets;
+	private HashMap<Target,Integer> targets;
     private HashMap<String,Object> data;
 
     public PlayerData()
@@ -75,6 +75,8 @@ public class PlayerData
         Integer current = targets.get(target);
         if(current != null)
             targets.put(target,target.increase(current,value));
+        else
+        	targets.put(target,value); //Initial value is zero so zero + vale = value
     }
 
     public void addTarget(Target target)
@@ -103,4 +105,9 @@ public class PlayerData
         }
         allegiant = true;
     }
+
+    Map<Target,Integer> getTargetData()
+	{
+		return targets;
+	}
 }

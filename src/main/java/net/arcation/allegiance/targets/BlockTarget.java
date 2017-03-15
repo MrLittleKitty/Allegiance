@@ -64,4 +64,9 @@ public class BlockTarget extends Target
 	{
 		return data;
 	}
+
+	public int getAmount()
+	{
+		return amount;
+	}
 }

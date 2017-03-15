@@ -2,7 +2,7 @@ package net.arcation.allegiance.commands;
 
 import net.arcation.allegiance.Allegiance;
 import net.arcation.allegiance.Lang;
-import net.arcation.allegiance.PlayerData;
+import net.arcation.allegiance.data.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

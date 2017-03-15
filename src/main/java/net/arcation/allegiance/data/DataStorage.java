@@ -1,6 +1,5 @@
 package net.arcation.allegiance.data;
 
-import net.arcation.allegiance.PlayerData;
 import net.arcation.allegiance.targets.Target;
 
 import java.util.List;
@@ -15,5 +14,5 @@ public interface DataStorage
 {
 	PlayerData loadPlayerData(UUID id, List<Target> targets);
 
-	void savePlayerData(UUID id, Set<Map.Entry<Target,Integer>> targetData);
+	void savePlayerData(UUID id, PlayerData data);
 }

@@ -1,32 +1,31 @@
 package net.arcation.allegiance;
 
 import net.arcation.allegiance.data.DataStorage;
+import net.arcation.allegiance.data.PlayerData;
+import net.arcation.allegiance.listeners.PlaytimeListener;
+import net.arcation.allegiance.listeners.BlockTargetListeners;
 import net.arcation.allegiance.targets.BlockTarget;
+import net.arcation.allegiance.targets.BlockTargetType;
+import net.arcation.allegiance.targets.PlaytimeTarget;
 import net.arcation.allegiance.targets.Target;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerLeashEntityEvent;
-import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by Mr_Little_Kitty on 2/24/2017.
  */
 public class Allegiance extends JavaPlugin implements Listener
 {
+	private List<Target> targets;
     private HashMap<UUID,PlayerData> playerCache;
     private DataStorage storage;
 
@@ -34,12 +33,45 @@ public class Allegiance extends JavaPlugin implements Listener
     public void onEnable()
     {
         playerCache = new HashMap<>();
+		targets = new ArrayList<>();
+
+		ConfigManager manager = new ConfigManager(this);
+
+		PlaytimeTarget playtimeTarget = manager.getPlayTimeTarget();
+		if(playtimeTarget != null)
+		{
+			log("-Loaded new Playtime target set at "+playtimeTarget.getMinutesRequired()+" minutes.");
+			new PlaytimeListener(this,playtimeTarget);
+			targets.add(playtimeTarget);
+		}
+
+		Map<BlockTargetType,List<BlockTarget>> blockTargets = manager.getBlockTargets();
+		if(blockTargets != null)
+		{
+			BlockTargetListeners blockListeners = new BlockTargetListeners(this);
+			for(Map.Entry<BlockTargetType,List<BlockTarget>> entry : blockTargets.entrySet())
+			{
+				for(BlockTarget target : entry.getValue())
+				{
+					log("-Loaded new block "+entry.getKey().name()+" target set at "+target.getAmount()+" of "+target.getMaterial().name());
+					blockListeners.addBlockTarget(entry.getKey(),target);
+					targets.add(target);
+				}
+			}
+		}
+
+		//TODO----Create the storage system and initialize it here
+		storage = null;
+
+		for(Player player : Bukkit.getOnlinePlayers())
+			playerCache.put(player.getUniqueId(),storage.loadPlayerData(player.getUniqueId(),targets));
     }
 
     @Override
     public void onDisable()
     {
-
+		for(Player player : Bukkit.getOnlinePlayers())
+			storage.savePlayerData(player.getUniqueId(),playerCache.get(player.getUniqueId()));
     }
 
     @EventHandler(priority = EventPriority.LOWEST,ignoreCancelled = true)
@@ -68,45 +100,5 @@ public class Allegiance extends JavaPlugin implements Listener
     public void log(String information)
     {
         getLogger().info(information);
-    }
-
-    private List<Target> loadTargets()
-    {
-        ArrayList<Target> targets = new ArrayList<>();
-        FileConfiguration config = this.getConfig();
-
-        ConfigurationSection targetSec = config.getConfigurationSection("targets");
-        if(targetSec != null)
-        {
-            ConfigurationSection breakTargets = targetSec.getConfigurationSection("break");
-            if(breakTargets != null)
-            {
-                for(String key : breakTargets.getKeys(false))
-                {
-                    BlockTarget t = loadBlockTarget(breakTargets.getConfigurationSection(key));
-
-                }
-            }
-            ConfigurationSection placeTargets = targetSec.getConfigurationSection("place");
-        }
-        return null;//TOOD---Remove
-    }
-
-    private BlockTarget loadBlockTarget(ConfigurationSection section)
-    {
-        try
-        {
-            int id = section.getInt("id");
-            int amount = section.getInt("amount");
-            Material material = Material.getMaterial(section.getString("material"));
-            byte data = (byte) section.getInt("data");
-            return new BlockTarget(id,amount,material,data);
-        }
-        catch(Exception e)
-        {
-            log("There was a problem loading a block target from path:"+section.getCurrentPath());
-            e.printStackTrace();
-            return null;
-        }
     }
 }

@@ -1,28 +1,24 @@
 package net.arcation.allegiance.listeners;
 
 import net.arcation.allegiance.Allegiance;
-import net.arcation.allegiance.PlayerData;
+import net.arcation.allegiance.data.PlayerData;
 import net.arcation.allegiance.targets.BlockTarget;
 import net.arcation.allegiance.targets.BlockTargetType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.*;
 
 /**
  * Created by Mr_Little_Kitty on 3/2/2017.
  */
-public class TargetListeners implements Listener
+public class BlockTargetListeners implements Listener
 {
 	private Allegiance allegiance;
 
@@ -30,7 +26,7 @@ public class TargetListeners implements Listener
 	//You cant have different targets for different wool colors etc
 	private EnumMap<BlockTargetType,Map<Material,BlockTarget>> targetMap;
 
-	public TargetListeners(Allegiance allegiance)
+	public BlockTargetListeners(Allegiance allegiance)
 	{
 		this.allegiance = allegiance;
 		Bukkit.getPluginManager().registerEvents(this,allegiance);
