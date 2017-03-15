@@ -2,7 +2,8 @@ name: ${project.name}
 version: ${project.version}
 main: net.arcation.allegiance
 author: Mr_Little_Kitty
-depend: [Citadel, NameLayer]
+softdepend: [Citadel, Bastion, CombatTagPlus]
+
 commands:
    Allegiance:
       description: Base command for Allegiance

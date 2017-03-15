@@ -2,6 +2,7 @@ package net.arcation.allegiance;
 
 import net.arcation.allegiance.data.DataStorage;
 import net.arcation.allegiance.data.PlayerData;
+import net.arcation.allegiance.listeners.NaughtyListeners;
 import net.arcation.allegiance.listeners.PlaytimeListener;
 import net.arcation.allegiance.listeners.BlockTargetListeners;
 import net.arcation.allegiance.targets.BlockTarget;
@@ -60,37 +61,59 @@ public class Allegiance extends JavaPlugin implements Listener
 			}
 		}
 
+		if(targets.isEmpty())
+		{
+			log("UH-OH! It doesn't look like you have any Allegiance targets. Add some to the config and restart.");
+			Bukkit.getPluginManager().disablePlugin(this);
+			return;
+		}
+
+		//Initialize listeners to stop people from raiding, pvping, etc
+		new NaughtyListeners(this);
+
 		//TODO----Create the storage system and initialize it here
 		storage = null;
 
+		//Load data for any players online (if they used /reload)
 		for(Player player : Bukkit.getOnlinePlayers())
-			playerCache.put(player.getUniqueId(),storage.loadPlayerData(player.getUniqueId(),targets));
+			loadPlayer(player.getUniqueId());
     }
 
     @Override
     public void onDisable()
     {
 		for(Player player : Bukkit.getOnlinePlayers())
-			storage.savePlayerData(player.getUniqueId(),playerCache.get(player.getUniqueId()));
+			unloadPlayer(player.getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.LOWEST,ignoreCancelled = true)
     public void playerJoinLoadData(PlayerJoinEvent event)
     {
-
+		loadPlayer(event.getPlayer().getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
     public void playerLeaveUnloadData(PlayerQuitEvent event)
     {
-
+		unloadPlayer(event.getPlayer().getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
     public void playerLeaveUnloadData(PlayerKickEvent event)
     {
-
+		unloadPlayer(event.getPlayer().getUniqueId());
     }
+
+    private void loadPlayer(UUID id)
+	{
+		playerCache.put(id,storage.loadPlayerData(id,targets));
+	}
+
+    private void unloadPlayer(UUID id)
+	{
+		storage.savePlayerData(id,playerCache.get(id));
+		playerCache.remove(id);
+	}
 
     public PlayerData getPlayer(UUID id)
     {
