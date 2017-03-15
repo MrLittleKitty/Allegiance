@@ -10,6 +10,7 @@ import net.arcation.allegiance.targets.BlockTargetType;
 import net.arcation.allegiance.targets.PlaytimeTarget;
 import net.arcation.allegiance.targets.Target;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -124,4 +125,9 @@ public class Allegiance extends JavaPlugin implements Listener
     {
         getLogger().info(information);
     }
+
+    public void sendMessageToPlayer(Player player, String message)
+	{
+		player.sendMessage(ChatColor.BLUE+"[Allegiance] "+ ChatColor.WHITE+message);
+	}
 }
