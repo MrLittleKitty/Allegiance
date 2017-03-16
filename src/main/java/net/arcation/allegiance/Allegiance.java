@@ -34,6 +34,9 @@ public class Allegiance extends JavaPlugin implements Listener
     @Override
     public void onEnable()
     {
+    	//Register us to load/unload player data
+    	Bukkit.getPluginManager().registerEvents(this,this);
+
         playerCache = new HashMap<>();
 		targets = new ArrayList<>();
 
