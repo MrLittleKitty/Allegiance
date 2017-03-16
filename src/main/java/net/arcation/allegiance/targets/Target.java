@@ -26,6 +26,11 @@ public abstract class Target
 
     public abstract String getCompletionString(int value);
 
+    public int getId()
+    {
+        return id;
+    }
+
     @Override
     public int hashCode()
     {

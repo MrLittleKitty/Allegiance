@@ -2,6 +2,7 @@ package net.arcation.allegiance;
 
 import net.arcation.allegiance.data.DataStorage;
 import net.arcation.allegiance.data.PlayerData;
+import net.arcation.allegiance.data.ShittyFileStorage;
 import net.arcation.allegiance.listeners.NaughtyListeners;
 import net.arcation.allegiance.listeners.PlaytimeListener;
 import net.arcation.allegiance.listeners.BlockTargetListeners;
@@ -20,6 +21,7 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -75,8 +77,10 @@ public class Allegiance extends JavaPlugin implements Listener
 		//Initialize listeners to stop people from raiding, pvping, etc
 		new NaughtyListeners(this);
 
-		//TODO----Create the storage system and initialize it here
-		storage = null;
+		File storageLocation = new File(getDataFolder(),File.pathSeparator+"playerData");
+		if(!storageLocation.exists() || !storageLocation.isDirectory())
+			storageLocation.mkdir();
+		storage = new ShittyFileStorage(storageLocation);
 
 		//Load data for any players online (if they used /reload)
 		for(Player player : Bukkit.getOnlinePlayers())
