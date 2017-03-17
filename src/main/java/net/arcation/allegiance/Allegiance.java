@@ -48,7 +48,12 @@ public class Allegiance extends JavaPlugin implements Listener
 		if(playtimeTarget != null)
 		{
 			log("-Loaded new Playtime target set at "+playtimeTarget.getMinutesRequired()+" minutes.");
-			new PlaytimeListener(this,playtimeTarget);
+
+			int updateTimeInMinutes = manager.getPlayTimeUpdateTime();
+
+			log("-Will be running Playtime updates every "+updateTimeInMinutes+" minutes.");
+
+			new PlaytimeListener(this,playtimeTarget,(long)updateTimeInMinutes*60L*1000L);
 			targets.add(playtimeTarget);
 		}
 

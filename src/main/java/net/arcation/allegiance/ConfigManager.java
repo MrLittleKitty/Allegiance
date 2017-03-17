@@ -48,6 +48,11 @@ public class ConfigManager
 		return 0; //TODO---implementS
 	}
 
+	int getPlayTimeUpdateTime()
+	{
+		return config.getInt("PlaytimeUpdateInMinutes");
+	}
+
 	PlaytimeTarget getPlayTimeTarget()
 	{
 		ConfigurationSection playTimeSec = config.getConfigurationSection("playTimeTarget");
