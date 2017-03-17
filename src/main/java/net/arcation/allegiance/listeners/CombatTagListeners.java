@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
  */
 public class CombatTagListeners implements Listener
 {
-	public CombatTagListeners(Allegiance allegiance)
+	public CombatTagListeners(Allegiance allegiance, int allowPvpPercent)
 	{
 
 	}

@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
  */
 public class CitadelListeners implements Listener
 {
-	public CitadelListeners(Allegiance allegiance)
+	public CitadelListeners(Allegiance allegiance, int allowInvDamagePercent)
 	{
 
 	}

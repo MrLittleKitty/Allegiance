@@ -15,9 +15,16 @@ import org.bukkit.event.Listener;
 public class BastionListeners implements Listener
 {
 	private Allegiance allegiance;
-	public BastionListeners(Allegiance allegiance)
+	private int percentToDamage;
+	private String bastionMessage;
+
+	public BastionListeners(Allegiance allegiance, int percentToDamage)
 	{
 		this.allegiance = allegiance;
+		this.percentToDamage = percentToDamage;
+
+		bastionMessage = String.format(Lang.DontDamageBastions,percentToDamage);
+
 		Bukkit.getPluginManager().registerEvents(this,allegiance);
 	}
 
@@ -30,9 +37,13 @@ public class BastionListeners implements Listener
 		if(data.isBypassed() || data.isAllegiant())
 			return;
 
+		//If they are past the threshold then they can do damage
+		if(data.getRoundedAllegiantPercent() >= percentToDamage)
+			return;
+
 		//Otherwise they cant damage bastions
 		event.setCancelled(true);
 
-		allegiance.sendMessageToPlayer(event.getPlayer(), Lang.DONTDAMAGEBASTIONS);
+		allegiance.sendMessageToPlayer(event.getPlayer(), bastionMessage);
 	}
 }

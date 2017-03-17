@@ -70,13 +70,31 @@ public class PlayerData
         return total/targets.size();
     }
 
+    public int getRoundedAllegiantPercent()
+	{
+		return (int)(getAllegiantPercent()*100);
+	}
+
     public void increaseTarget(Target target, int value)
     {
         Integer current = targets.get(target);
         if(current != null)
-            targets.put(target,target.increase(current,value));
+		{
+			int newValue = target.increase(current, value);
+			targets.put(target, newValue);
+
+			//If the score before increment didn't meet allegiance but the new one does, then recheck all allegiances
+			if(!target.isCompleted(value) && target.isCompleted(newValue))
+				recheckAllegiance();
+		}
         else
-        	targets.put(target,value); //Initial value is zero so zero + vale = value
+		{
+			targets.put(target, value); //Initial value is zero so zero + vale = value
+
+			//Check if maybe it was initialized at being already completed
+			if(target.isCompleted(value))
+				recheckAllegiance();
+		}
     }
 
     public void addTarget(Target target)
