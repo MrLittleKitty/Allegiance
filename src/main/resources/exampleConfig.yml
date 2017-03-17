@@ -1,0 +1,26 @@
+#The time in minutes between each update to increase playtime of online players
+PlaytimeUpdateInMinutes: 1
+
+#The target for monitoring the playtime of players
+playTimeTarget:
+  On: false
+  UniqueId: 1 #This needs to be GLOBALLY UNIQUE for ALL TARGETS.
+  TimeInMinutes: 600 #How many minutes they need to play
+
+#Block targets for players
+blockTargets:
+  break1: #The name at this level doesn't matter, just needs to be unique for each
+    On: false
+    UniqueId: 2 #This ID needs to be GLOBALLY UNIQUE for ALL TARGETS. Even if you delete a target never reuse its ID
+    TargetType: BREAK
+    Material: STONE
+    Data: -1
+    Amount: 576
+  place1:
+    On: false #Just a fail-safe for when the default targets are added
+    UniqueId: 3
+    TargetType: PLACE #The type of this block target (BREAK, PLACE, etc.)
+    Material: LOG
+    Data: -1 #The data value for the material (or -1 if none). Ex: use a non -1 value if you care about LOG types
+    Amount: 64 #The target amount. How much of this block they need to (BREAK,PLACE, etc.)
+

@@ -118,7 +118,7 @@ public class ConfigManager
 	{
 		ConfigurationSection section = config.createSection("blockTargets");
 
-		ConfigurationSection first = section.createSection("2");
+		ConfigurationSection first = section.createSection("break1");
 
 		first.set("On", false);
 		first.set("UniqueId",2);
@@ -127,7 +127,7 @@ public class ConfigManager
 		first.set("Data", -1);
 		first.set("Amount", 64*9);
 
-		ConfigurationSection second = section.createSection("3");
+		ConfigurationSection second = section.createSection("place1");
 
 		second.set("On",false);
 		second.set("UniqueId",3);
