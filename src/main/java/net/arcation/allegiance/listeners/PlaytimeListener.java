@@ -7,7 +7,11 @@ import net.arcation.allegiance.util.Hash;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -34,6 +38,7 @@ public class PlaytimeListener implements Listener, Runnable
 
 		locationHashes = new HashMap<>();
 
+		//Bukkit.getPluginManager().registerEvents(this,allegiance);
 		Bukkit.getScheduler().runTaskTimer(allegiance,this,1000*60,playTimeCheck);
 		lastUpdate = System.currentTimeMillis();
 	}
@@ -70,4 +75,22 @@ public class PlaytimeListener implements Listener, Runnable
 		}
 		lastUpdate = System.currentTimeMillis();
 	}
+
+//	@EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
+//	public void onPlayerLeave(PlayerKickEvent event)
+//	{
+//		handleLeave(event.getPlayer().getUniqueId());
+//	}
+//
+//	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+//	public void onPlayerLeave(PlayerQuitEvent event)
+//	{
+//		handleLeave(event.getPlayer().getUniqueId());
+//	}
+//
+//	private void handleLeave(UUID id)
+//	{
+//		if(locationHashes.containsKey(id))
+//			locationHashes.remove(id);
+//	}
 }
