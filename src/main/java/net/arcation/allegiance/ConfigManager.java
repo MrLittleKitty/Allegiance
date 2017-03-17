@@ -22,13 +22,33 @@ public class ConfigManager
 	private final FileConfiguration config;
 	private final JavaPlugin plugin;
 
-	public ConfigManager(JavaPlugin plugin)
+	ConfigManager(JavaPlugin plugin)
 	{
 		this.plugin = plugin;
 		this.config = plugin.getConfig();
 	}
 
-	public PlaytimeTarget getPlayTimeTarget()
+	public int getAllowFirePercent()
+	{
+		return 100; //TODO---implement
+	}
+
+	public int getAllowPvpPercent()
+	{
+		return 0; ///TODO---implement
+	}
+
+	public int getAllowInventoryBreakingPercent()
+	{
+		return 0; //TODO----implement
+	}
+
+	public int getAllowBastionDamagePercent()
+	{
+		return 0; //TODO---implementS
+	}
+
+	PlaytimeTarget getPlayTimeTarget()
 	{
 		ConfigurationSection playTimeSec = config.getConfigurationSection("playTimeTarget");
 		if(playTimeSec == null)
@@ -45,7 +65,7 @@ public class ConfigManager
 		return new PlaytimeTarget(id,amount);
 	}
 
-	public Map<BlockTargetType,List<BlockTarget>> getBlockTargets()
+	Map<BlockTargetType,List<BlockTarget>> getBlockTargets()
 	{
 		ConfigurationSection blockTargets = config.getConfigurationSection("blockTargets");
 		if(blockTargets == null)

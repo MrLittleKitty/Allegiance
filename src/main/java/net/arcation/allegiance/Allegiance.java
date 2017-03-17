@@ -75,7 +75,7 @@ public class Allegiance extends JavaPlugin implements Listener
 		}
 
 		//Initialize listeners to stop people from raiding, pvping, etc
-		new NaughtyListeners(this);
+		new NaughtyListeners(this,manager);
 
 		File storageLocation = new File(getDataFolder(),File.pathSeparator+"playerData");
 		if(!storageLocation.exists() || !storageLocation.isDirectory())
