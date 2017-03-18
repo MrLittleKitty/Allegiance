@@ -1,5 +1,6 @@
 package net.arcation.allegiance.targets;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 /**
@@ -7,21 +8,23 @@ import org.bukkit.Material;
  */
 public class BlockTarget extends Target
 {
+	private final BlockTargetType type;
 	private final int amount;
 	private final Material material;
 	private final byte data;
 
-	public BlockTarget(int id, int amount, Material material, byte data)
+	public BlockTarget(int id, BlockTargetType type, int amount, Material material, byte data)
 	{
 		super(id);
+		this.type = type;
 		this.amount = amount;
 		this.material = material;
 		this.data = data;
 	}
 
-	public BlockTarget(int id, int amount, Material material)
+	public BlockTarget(int id, BlockTargetType type, int amount, Material material)
 	{
-		this(id,amount,material,(byte)-1);
+		this(id,type, amount,material,(byte)-1);
 	}
 
 	@Override
@@ -48,10 +51,10 @@ public class BlockTarget extends Target
 	@Override
 	public String getCompletionString(int value)
 	{
-		String builder = "%s " + value + '/' + amount +
-				" blocks of type " + (data == -1 ? material.toString() : material.toString() + ":" + data) +
-				". " + Target.format.format(getPercentCompleted(value) * 100) +
-				"% complete.";
+		String builder = ChatColor.GREEN+String.format("%s ",type.getPastTenseString()) + ChatColor.WHITE+ (value + '/' + amount)
+				+ ChatColor.GREEN +" blocks of type " + (data == -1 ? material.toString() : material.toString() + ":" + data) +
+				". " + ChatColor.WHITE+Target.format.format(getPercentCompleted(value) * 100) +
+				"%" + ChatColor.GREEN+" complete.";
 		return builder;
 	}
 

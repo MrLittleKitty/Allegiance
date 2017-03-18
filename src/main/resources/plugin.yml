@@ -9,3 +9,4 @@ commands:
       description: Base command for Allegiance
       usage: /Allegiance
       permission: Allegiance
+      aliases: [al, alle]

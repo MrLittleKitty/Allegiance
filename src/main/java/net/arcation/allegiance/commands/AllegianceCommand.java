@@ -3,6 +3,7 @@ package net.arcation.allegiance.commands;
 import net.arcation.allegiance.Allegiance;
 import net.arcation.allegiance.Lang;
 import net.arcation.allegiance.data.PlayerData;
+import net.arcation.allegiance.targets.Target;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,10 +15,13 @@ import org.bukkit.entity.Player;
  */
 public class AllegianceCommand implements CommandExecutor
 {
-	private Allegiance allegiance;
-	public AllegianceCommand(Allegiance allegiance)
+	private final Allegiance allegiance;
+	private final boolean detailedInfo;
+
+	public AllegianceCommand(Allegiance allegiance, boolean detailedAllegianceInfo)
 	{
 		this.allegiance = allegiance;
+		this.detailedInfo = detailedAllegianceInfo;
 		allegiance.getCommand("Allegiance").setExecutor(this);
 	}
 
@@ -92,17 +96,13 @@ public class AllegianceCommand implements CommandExecutor
 			return true;
 		}
 
-		if(data.isBypassed()) //If they are already allegiant then just print it
+		if(data.isAllegiant()) //If they are already allegiant then just print it
 			sender.sendMessage(Lang.UserIsAllegiant);
 		else
 		{
-			//If they aren't allegiant then recheck it just in case they recently met requirements
-			data.recheckAllegiance();
-
-			if(data.isAllegiant())
-				sender.sendMessage("SEND A COOL MESSAGE SAYING HEY YOU JUST BECAME ALLEGIANT"); //TODO---DO THIS
-			else
-				sender.sendMessage(String.format(Lang.UserNotAllegiant,data.getRoundedAllegiantPercent()));
+			sender.sendMessage(String.format(Lang.UserNotAllegiant,data.getRoundedAllegiantPercent()));
+			if(detailedInfo)
+				sender.sendMessage(data.getTargetStrings());
 		}
 
 		return true;

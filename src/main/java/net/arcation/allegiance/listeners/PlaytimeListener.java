@@ -31,7 +31,7 @@ public class PlaytimeListener implements Listener, Runnable
 	private final HashMap<UUID,Integer> locationHashes;
 	private long lastUpdate;
 
-	public PlaytimeListener(Allegiance allegiance,PlaytimeTarget target, long playTimeCheck)
+	public PlaytimeListener(Allegiance allegiance,PlaytimeTarget target, long playTimeCheckInTicks)
 	{
 		this.allegiance = allegiance;
 		this.target = target;
@@ -39,7 +39,7 @@ public class PlaytimeListener implements Listener, Runnable
 		locationHashes = new HashMap<>();
 
 		//Bukkit.getPluginManager().registerEvents(this,allegiance);
-		Bukkit.getScheduler().runTaskTimer(allegiance,this,20*60,playTimeCheck);
+		Bukkit.getScheduler().runTaskTimer(allegiance,this,20*60,playTimeCheckInTicks);
 		lastUpdate = System.currentTimeMillis();
 	}
 
@@ -47,7 +47,8 @@ public class PlaytimeListener implements Listener, Runnable
 	public void run()
 	{
 		allegiance.log("Running scheduled play time check...");
-		int incrementAmount = (int)((System.currentTimeMillis()-lastUpdate)/1000); //increment amount in seconds
+
+		int incrementAmount = (int)((System.currentTimeMillis()-lastUpdate)/(1000*60)); //increment amount in minutes
 
 		for(Player player : Bukkit.getOnlinePlayers())
 		{

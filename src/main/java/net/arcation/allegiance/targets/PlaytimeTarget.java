@@ -1,5 +1,7 @@
 package net.arcation.allegiance.targets;
 
+import org.bukkit.ChatColor;
+
 /**
  * Created by Mr_Little_Kitty on 3/2/2017.
  */
@@ -37,7 +39,7 @@ public class PlaytimeTarget extends Target
 	@Override
 	public String getCompletionString(int value)
 	{
-		return String.format("Played %s/%s minutes. %s complete.",value,minutesRequired,Target.format.format(getPercentCompleted(value)*100));
+		return String.format(ChatColor.GREEN+"Played "+ ChatColor.WHITE+"%s/%s"+ChatColor.GREEN +" minutes. "+ChatColor.WHITE+"%s"+ChatColor.GREEN +" complete.",value,minutesRequired,Target.format.format(getPercentCompleted(value)*100));
 	}
 
 	public int getMinutesRequired()

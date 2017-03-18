@@ -48,9 +48,24 @@ public class ConfigManager
 		return getOrSetDefault("PercentToDamageBastions",100);
 	}
 
+	boolean getDetailedAllegiance()
+	{
+		return getOrSetDefault("DetailedAllegianceInfo",false);
+	}
+
 	int getPlayTimeUpdateTime()
 	{
 		return getOrSetDefault("PlaytimeUpdateInMinutes",2);
+	}
+
+	private boolean getOrSetDefault(String path, boolean defaultValue)
+	{
+		if(!config.isSet(path))
+		{
+			config.set(path,defaultValue);
+			plugin.saveConfig();
+		}
+		return config.getBoolean(path);
 	}
 
 	private int getOrSetDefault(String path, int defaultValue)
@@ -70,6 +85,7 @@ public class ConfigManager
 		getAllowInventoryBreakingPercent();
 		getAllowBastionDamagePercent();
 		getPlayTimeUpdateTime();
+		getDetailedAllegiance();
 	}
 
 	PlaytimeTarget getPlayTimeTarget()
@@ -85,7 +101,7 @@ public class ConfigManager
 			return null;
 
 		int id = playTimeSec.getInt("UniqueId");
-		int amount = playTimeSec.getInt("TimeInSeconds");
+		int amount = playTimeSec.getInt("TimeInMinutes");
 		return new PlaytimeTarget(id,amount);
 	}
 
@@ -116,9 +132,9 @@ public class ConfigManager
 			int amount = targetSec.getInt("Amount");
 
 			if(data > 0)
-				targets.get(type).add(new BlockTarget(id,amount,material,(byte)data));
+				targets.get(type).add(new BlockTarget(id,type,amount,material,(byte)data));
 			else
-				targets.get(type).add(new BlockTarget(id,amount,material));
+				targets.get(type).add(new BlockTarget(id,type, amount,material));
 		}
 
 		return targets;
@@ -129,7 +145,7 @@ public class ConfigManager
 		ConfigurationSection section = config.createSection("playTimeTarget");
 		section.set("Enable",false);
 		section.set("UniqueId",1);
-		section.set("TimeInSeconds",60*60*10); //10 hours
+		section.set("TimeInMinutes",60*10); //10 hours
 		plugin.saveConfig();
 	}
 

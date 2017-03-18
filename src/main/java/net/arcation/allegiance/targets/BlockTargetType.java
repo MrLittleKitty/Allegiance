@@ -5,6 +5,17 @@ package net.arcation.allegiance.targets;
  */
 public enum BlockTargetType
 {
-    BREAK,
-    PLACE
+    BREAK("Broke"),
+    PLACE("Placed");
+
+    private final String pastTense;
+    private BlockTargetType(String pastTense)
+	{
+		this.pastTense = pastTense;
+	}
+
+	public String getPastTenseString()
+	{
+		return pastTense;
+	}
 }

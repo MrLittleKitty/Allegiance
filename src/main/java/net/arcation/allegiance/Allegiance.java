@@ -94,7 +94,7 @@ public class Allegiance extends JavaPlugin implements Listener
 		for(Player player : Bukkit.getOnlinePlayers())
 			loadPlayer(player.getUniqueId());
 
-		new AllegianceCommand(this);
+		new AllegianceCommand(this,manager.getDetailedAllegiance());
     }
 
     @Override
@@ -137,6 +137,11 @@ public class Allegiance extends JavaPlugin implements Listener
     {
         return playerCache.get(id);
     }
+
+    public List<Target> getTargets()
+	{
+		return targets;
+	}
 
     public void log(String information)
     {
