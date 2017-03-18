@@ -1,5 +1,6 @@
 package net.arcation.allegiance;
 
+import net.arcation.allegiance.commands.AllegianceCommand;
 import net.arcation.allegiance.data.DataStorage;
 import net.arcation.allegiance.data.PlayerData;
 import net.arcation.allegiance.data.ShittyFileStorage;
@@ -44,6 +45,8 @@ public class Allegiance extends JavaPlugin implements Listener
 
 		ConfigManager manager = new ConfigManager(this);
 
+		manager.checkDefaults();
+
 		PlaytimeTarget playtimeTarget = manager.getPlayTimeTarget();
 		if(playtimeTarget != null)
 		{
@@ -53,7 +56,7 @@ public class Allegiance extends JavaPlugin implements Listener
 
 			log("-Will be running Playtime updates every "+updateTimeInMinutes+" minutes.");
 
-			new PlaytimeListener(this,playtimeTarget,(long)updateTimeInMinutes*60L*1000L);
+			new PlaytimeListener(this,playtimeTarget,(long)updateTimeInMinutes*60L*20L);//Time is in ticks
 			targets.add(playtimeTarget);
 		}
 
@@ -82,7 +85,7 @@ public class Allegiance extends JavaPlugin implements Listener
 		//Initialize listeners to stop people from raiding, pvping, etc
 		new NaughtyListeners(this,manager);
 
-		File storageLocation = new File(getDataFolder(),File.pathSeparator+"playerData");
+		File storageLocation = new File(getDataFolder(),"playerData");
 		if(!storageLocation.exists() || !storageLocation.isDirectory())
 			storageLocation.mkdir();
 		storage = new ShittyFileStorage(storageLocation);
@@ -90,6 +93,8 @@ public class Allegiance extends JavaPlugin implements Listener
 		//Load data for any players online (if they used /reload)
 		for(Player player : Bukkit.getOnlinePlayers())
 			loadPlayer(player.getUniqueId());
+
+		new AllegianceCommand(this);
     }
 
     @Override
@@ -99,7 +104,7 @@ public class Allegiance extends JavaPlugin implements Listener
 			unloadPlayer(player.getUniqueId());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST,ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
     public void playerJoinLoadData(PlayerJoinEvent event)
     {
 		loadPlayer(event.getPlayer().getUniqueId());

@@ -30,27 +30,46 @@ public class ConfigManager
 
 	public int getAllowFirePercent()
 	{
-		return 100; //TODO---implement
+		return getOrSetDefault("PercentToLightShitOnFire",100);
 	}
 
 	public int getAllowPvpPercent()
 	{
-		return 0; ///TODO---implement
+		return getOrSetDefault("PercentToPVP",100);
 	}
 
 	public int getAllowInventoryBreakingPercent()
 	{
-		return 0; //TODO----implement
+		return getOrSetDefault("PercentToBreakInventoryBlocks",100);
 	}
 
 	public int getAllowBastionDamagePercent()
 	{
-		return 0; //TODO---implementS
+		return getOrSetDefault("PercentToDamageBastions",100);
 	}
 
 	int getPlayTimeUpdateTime()
 	{
-		return config.getInt("PlaytimeUpdateInMinutes");
+		return getOrSetDefault("PlaytimeUpdateInMinutes",2);
+	}
+
+	private int getOrSetDefault(String path, int defaultValue)
+	{
+		if(!config.isSet(path))
+		{
+			config.set(path,defaultValue);
+			plugin.saveConfig();
+		}
+		return config.getInt(path);
+	}
+
+	public void checkDefaults()
+	{
+		getAllowFirePercent();
+		getAllowPvpPercent();
+		getAllowInventoryBreakingPercent();
+		getAllowBastionDamagePercent();
+		getPlayTimeUpdateTime();
 	}
 
 	PlaytimeTarget getPlayTimeTarget()
@@ -61,7 +80,7 @@ public class ConfigManager
 			createDefaultPlayTimeTarget();
 			return null;
 		}
-		boolean on = playTimeSec.getBoolean("On");
+		boolean on = playTimeSec.getBoolean("Enable");
 		if(!on)
 			return null;
 
@@ -86,7 +105,7 @@ public class ConfigManager
 		for(String key : blockTargets.getKeys(false))
 		{
 			ConfigurationSection targetSec = blockTargets.getConfigurationSection(key);
-			boolean on = targetSec.getBoolean("On");
+			boolean on = targetSec.getBoolean("Enable");
 			if(!on)
 				continue;
 
@@ -108,7 +127,7 @@ public class ConfigManager
 	private void createDefaultPlayTimeTarget()
 	{
 		ConfigurationSection section = config.createSection("playTimeTarget");
-		section.set("On",false);
+		section.set("Enable",false);
 		section.set("UniqueId",1);
 		section.set("TimeInMinutes",60*10);
 		plugin.saveConfig();
@@ -120,7 +139,7 @@ public class ConfigManager
 
 		ConfigurationSection first = section.createSection("break1");
 
-		first.set("On", false);
+		first.set("Enable", false);
 		first.set("UniqueId",2);
 		first.set("TargetType",BlockTargetType.BREAK.name());
 		first.set("Material", Material.STONE.name());
@@ -129,7 +148,7 @@ public class ConfigManager
 
 		ConfigurationSection second = section.createSection("place1");
 
-		second.set("On",false);
+		second.set("Enable",false);
 		second.set("UniqueId",3);
 		second.set("TargetType",BlockTargetType.PLACE.name());
 		second.set("Material", Material.LOG.name());

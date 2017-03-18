@@ -23,7 +23,7 @@ public class PlaytimeListener implements Listener, Runnable
 {
 	private final PlaytimeTarget target;
 	private final Allegiance allegiance;
-	private static final String PLAYTIME_KEY = "P";
+	//private static final String PLAYTIME_KEY = "P";
 
 	//We're just going to store one int for their previous location
 	//If the location they are at at (currentTime + playTimeCheck) has the EXACT hash of the location they are at now
@@ -39,7 +39,7 @@ public class PlaytimeListener implements Listener, Runnable
 		locationHashes = new HashMap<>();
 
 		//Bukkit.getPluginManager().registerEvents(this,allegiance);
-		Bukkit.getScheduler().runTaskTimer(allegiance,this,1000*60,playTimeCheck);
+		Bukkit.getScheduler().runTaskTimer(allegiance,this,20*60,playTimeCheck);
 		lastUpdate = System.currentTimeMillis();
 	}
 

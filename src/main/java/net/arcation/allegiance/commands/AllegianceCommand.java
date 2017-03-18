@@ -18,6 +18,7 @@ public class AllegianceCommand implements CommandExecutor
 	public AllegianceCommand(Allegiance allegiance)
 	{
 		this.allegiance = allegiance;
+		allegiance.getCommand("Allegiance").setExecutor(this);
 	}
 
 	@Override

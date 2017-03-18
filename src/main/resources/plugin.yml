@@ -1,6 +1,6 @@
-name: ${project.name}
-version: ${project.version}
-main: net.arcation.allegiance
+name: Allegiance
+version: 1.0.0
+main: net.arcation.allegiance.Allegiance
 author: Mr_Little_Kitty
 softdepend: [Citadel, Bastion, CombatTagPlus]
 
