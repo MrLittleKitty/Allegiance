@@ -85,7 +85,7 @@ public class ConfigManager
 			return null;
 
 		int id = playTimeSec.getInt("UniqueId");
-		int amount = playTimeSec.getInt("TimeInMinutes");
+		int amount = playTimeSec.getInt("TimeInSeconds");
 		return new PlaytimeTarget(id,amount);
 	}
 
@@ -129,7 +129,7 @@ public class ConfigManager
 		ConfigurationSection section = config.createSection("playTimeTarget");
 		section.set("Enable",false);
 		section.set("UniqueId",1);
-		section.set("TimeInMinutes",60*10);
+		section.set("TimeInSeconds",60*60*10); //10 hours
 		plugin.saveConfig();
 	}
 

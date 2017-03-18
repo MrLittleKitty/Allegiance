@@ -9,10 +9,3 @@ commands:
       description: Base command for Allegiance
       usage: /Allegiance
       permission: Allegiance
-permissions:
-    Allegiance.*:
-        description: Gives access to all Allegiance commands
-        default: false
-    Allegiance:
-        description: idk something goes here
-        default: false

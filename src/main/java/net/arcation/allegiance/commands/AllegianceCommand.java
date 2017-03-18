@@ -61,7 +61,7 @@ public class AllegianceCommand implements CommandExecutor
 					if(data.isAllegiant())
 						sender.sendMessage("Player ["+player.getName()+"] is allegiant.");
 					else
-						sender.sendMessage("Player ["+player.getName()+"] is not allegiant.");
+						sender.sendMessage(String.format("Player ["+player.getName()+"] is %s%% allegiant.",data.getRoundedAllegiantPercent()));
 					return true;
 				}
 				else return usedAllegianceCommand(sender);
@@ -102,7 +102,7 @@ public class AllegianceCommand implements CommandExecutor
 			if(data.isAllegiant())
 				sender.sendMessage("SEND A COOL MESSAGE SAYING HEY YOU JUST BECAME ALLEGIANT"); //TODO---DO THIS
 			else
-				sender.sendMessage(Lang.UserNotAllegiant);
+				sender.sendMessage(String.format(Lang.UserNotAllegiant,data.getRoundedAllegiantPercent()));
 		}
 
 		return true;
