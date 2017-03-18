@@ -61,7 +61,8 @@ public class BlockTargetListeners implements Listener
 			if(target != null)
 			{
 				PlayerData data = allegiance.getPlayer(uuid);
-				data.increaseTarget(target,1);
+				if(data.increaseTarget(target,1))
+					allegiance.announcePlayerAllegiance(Bukkit.getPlayer(uuid));
 			}
 		}
 	}

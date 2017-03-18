@@ -59,6 +59,8 @@ public class ShittyFileStorage implements DataStorage
                 data.addTarget(target);
         }
 
+        data.recheckAllegiance();
+
         return data;
     }
 

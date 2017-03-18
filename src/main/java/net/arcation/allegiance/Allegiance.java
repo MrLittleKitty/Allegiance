@@ -152,4 +152,11 @@ public class Allegiance extends JavaPlugin implements Listener
 	{
 		player.sendMessage(ChatColor.BLUE+"[Allegiance] "+ ChatColor.WHITE+message);
 	}
+
+	public void announcePlayerAllegiance(Player player)
+	{
+		log("Player ["+player.getName()+"] just became allegiant.");
+
+		player.sendMessage(ChatColor.GREEN+"You just became allegiant! Huzzah!");
+	}
 }

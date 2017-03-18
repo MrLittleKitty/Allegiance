@@ -75,7 +75,8 @@ public class PlayerData
 		return (int)(getAllegiantPercent()*100);
 	}
 
-    public void increaseTarget(Target target, int value)
+	//Returns true if the player became Allegiant because of the increment, false otherwise
+    public boolean increaseTarget(Target target, int value)
     {
         Integer current = targets.get(target);
         if(current != null)
@@ -84,8 +85,11 @@ public class PlayerData
 			targets.put(target, newValue);
 
 			//If the score before increment didn't meet allegiance but the new one does, then recheck all allegiances
-			if(!target.isCompleted(value) && target.isCompleted(newValue))
+			if(!target.isCompleted(current) && target.isCompleted(newValue))
+			{
 				recheckAllegiance();
+				return isAllegiant();
+			}
 		}
         else
 		{
@@ -95,6 +99,7 @@ public class PlayerData
 			if(target.isCompleted(value))
 				recheckAllegiance();
 		}
+		return false;
     }
 
     public void addTarget(Target target)

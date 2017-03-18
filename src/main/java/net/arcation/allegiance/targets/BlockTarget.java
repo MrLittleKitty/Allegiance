@@ -51,7 +51,7 @@ public class BlockTarget extends Target
 	@Override
 	public String getCompletionString(int value)
 	{
-		String builder = ChatColor.GREEN+String.format("%s ",type.getPastTenseString()) + ChatColor.WHITE+ (value + '/' + amount)
+		String builder = ChatColor.GREEN+String.format("%s ",type.getPastTenseString()) + ChatColor.WHITE+ value + "/" + amount
 				+ ChatColor.GREEN +" blocks of type " + (data == -1 ? material.toString() : material.toString() + ":" + data) +
 				". " + ChatColor.WHITE+Target.format.format(getPercentCompleted(value) * 100) +
 				"%" + ChatColor.GREEN+" complete.";

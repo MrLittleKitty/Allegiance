@@ -72,7 +72,8 @@ public class PlaytimeListener implements Listener, Runnable
 				continue; //Sorry you don't get a playtime increment because you are in the same location (probably)
 
 			PlayerData data = allegiance.getPlayer(id);
-			data.increaseTarget(target,incrementAmount);
+			if(data.increaseTarget(target,incrementAmount))
+				allegiance.announcePlayerAllegiance(player);
 		}
 		lastUpdate = System.currentTimeMillis();
 	}
