@@ -41,7 +41,7 @@ public class AllegianceCommand implements CommandExecutor
 			{
 				if(sender.isOp())
 				{
-					if (args.length > 2)
+					if (args.length > 1)
 					{
 						String target = args[2];
 						Player player = Bukkit.getPlayer(target);

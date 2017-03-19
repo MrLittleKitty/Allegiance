@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
  */
 public abstract class Target
 {
-    public static final DecimalFormat format = new DecimalFormat("#.00");
+    public static final DecimalFormat format = new DecimalFormat("0.00");
 
     private int id;
     public Target(int id)
