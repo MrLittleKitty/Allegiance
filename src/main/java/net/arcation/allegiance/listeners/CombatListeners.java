@@ -99,7 +99,7 @@ public class CombatListeners implements Listener, Runnable
 		PlayerData attackerData = allegiance.getPlayer(attacker.getUniqueId());
 		PlayerData targetData = allegiance.getPlayer(target.getUniqueId());
 
-		//If the attacker is dedicated
+		//If the attacker is allegiant
 		if(attackerData.isBypassed()
 				|| attackerData.isAllegiant()
 				|| attackerData.getRoundedAllegiantPercent() >= allowPvpPercent)
@@ -176,6 +176,8 @@ public class CombatListeners implements Listener, Runnable
 	@Override
 	public void run()
 	{
+		allegiance.log("-Running an update to clean up the fight timers");
+
 		//This will be run every so often to clean up fighting players list
 		Iterator<Map.Entry<UUID,HashMap<UUID,Long>>> topIterator = playersThatCanFight.entrySet().iterator();
 		while(topIterator.hasNext())
