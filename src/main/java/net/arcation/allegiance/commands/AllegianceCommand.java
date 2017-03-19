@@ -33,11 +33,7 @@ public class AllegianceCommand implements CommandExecutor
 			return usedAllegianceCommand(sender);
 		else
 		{
-			if(args[0].equalsIgnoreCase("info"))
-			{
-
-			}
-			else if(args[0].equalsIgnoreCase("bypass"))
+			if(args[0].equalsIgnoreCase("bypass"))
 			{
 				if(sender.isOp())
 				{
