@@ -37,6 +37,30 @@ public class AllegianceCommand implements CommandExecutor
 			{
 
 			}
+			else if(args[0].equalsIgnoreCase("bypass"))
+			{
+				if(sender.isOp())
+				{
+					if (args.length > 2)
+					{
+						String target = args[2];
+						Player player = Bukkit.getPlayer(target);
+						if(player != null)
+						{
+							PlayerData data = allegiance.getPlayer(player.getUniqueId());
+							if(data != null)
+							{
+								data.setBypassed(!data.isBypassed());
+								sender.sendMessage("Toggled players bypassed state to: "+(data.isBypassed() ? "On" : "Off"));
+								return true;
+							}
+							else sender.sendMessage("Uh oh we couldn't find the player data for that player. Something went wrong somewhere.");
+						}
+						else sender.sendMessage("The specified player is not online");
+					}
+					else sender.sendMessage("You didn't provide enough arguments to use this command.");
+				}
+			}
 			else
 			{
 				if(!(sender instanceof Player) || sender.isOp())
@@ -65,7 +89,16 @@ public class AllegianceCommand implements CommandExecutor
 					if(data.isAllegiant())
 						sender.sendMessage("Player ["+player.getName()+"] is allegiant.");
 					else
-						sender.sendMessage(String.format("Player ["+player.getName()+"] is %s%% allegiant.",data.getRoundedAllegiantPercent()));
+					{
+						sender.sendMessage(String.format("Player [" + player.getName() + "] is %s%% allegiant.", data.getRoundedAllegiantPercent()));
+						if(args.length > 1 && args[1].equalsIgnoreCase("info"))
+						{
+							String[] messages = data.getTargetStrings();
+							for(int i = 0; i < messages.length; i++)
+								messages[i] = "["+player.getName()+"] "+messages[i];
+							sender.sendMessage(messages);
+						}
+					}
 					return true;
 				}
 				else return usedAllegianceCommand(sender);

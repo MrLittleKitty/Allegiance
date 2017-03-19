@@ -39,7 +39,7 @@ public class PlaytimeTarget extends Target
 	@Override
 	public String getCompletionString(int value)
 	{
-		return String.format(ChatColor.GREEN+"Played "+ ChatColor.WHITE+"%s/%s"+ChatColor.GREEN +" minutes. "+ChatColor.WHITE+"%s"+ChatColor.GREEN +" complete.",value,minutesRequired,Target.format.format(getPercentCompleted(value)*100));
+		return String.format(ChatColor.GREEN+"Played "+ ChatColor.WHITE+"%s/%s"+ChatColor.GREEN +" minutes. "+ChatColor.WHITE+"%s%%"+ChatColor.GREEN +" complete.",value,minutesRequired,Target.format.format(getPercentCompleted(value)*100));
 	}
 
 	public int getMinutesRequired()
