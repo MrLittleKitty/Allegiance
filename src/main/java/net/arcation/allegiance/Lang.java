@@ -15,6 +15,6 @@ public class Lang
 	public static String DontPlaceLava = ChatColor.RED+"You can't place lava until you are %s%% allegiant.";
 	public static String DontLightShitOnFire = ChatColor.RED+"You can't light shit on fire until you are %s%% allegiant.";
 
-	public static String CantDamageReinforcements = "%s%%";
-	public static String CantPvp = "%s%%";
+	public static String CantDamageReinforcements = "You can't damage reinforcements until you are %s%% allegiant.";
+	public static String CantPvp = "You can't pvp until you are %s%% allegiant.";
 }

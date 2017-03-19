@@ -123,7 +123,7 @@ public class CombatListeners implements Listener, Runnable
 			else //If the attacker can't fight the victim then we are going to stop the damage
 			{
 				//Tell them that they aren't allowed to pvp until they reach the allegiance amount
-				attacker.sendMessage(cantPVPMessage);
+				allegiance.sendMessageToPlayer(attacker,cantPVPMessage);
 				return true;
 			}
 		}
