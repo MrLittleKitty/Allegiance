@@ -1,23 +1,44 @@
 #The time in minutes between each update to increase playtime of online players
 PlaytimeUpdateInMinutes: 1
 
+#The percent of allegiance a player needs to have to use lava buckets and flint & steel
+PercentToLightShitOnFire: 100
+
+#The percent of allegiance a player needs to have to damage citadel reinforcements
+PercentToDamageReinforcements: 100
+
+#The percent of allegiance a player needs to have to damage bastions
+PercentToDamageBastions: 100
+
+#Whether or not players get told exactly how much of each target they have completed
+DetailedAllegianceInfo: false
+
+#The percent of allegiance a player needs to have to attack another player first
+PercentToPVP: 100
+
+#How long a player has to attack after being attacked by another player
+HowLongPlayerCanFightAfterBeingAttackedInSeconds: 30
+
+#Whether or not players are able to fight other players who damage their reinforcements
+MakeFightableWhenDamagingReinforcements: true
+
 #The target for monitoring the playtime of players
 playTimeTarget:
-  On: false
+  Enable: false
   UniqueId: 1 #This needs to be GLOBALLY UNIQUE for ALL TARGETS.
   TimeInMinutes: 600 #How many minutes they need to play
 
 #Block targets for players
 blockTargets:
   break1: #The name at this level doesn't matter, just needs to be unique for each
-    On: false
+    Enable: false
     UniqueId: 2 #This ID needs to be GLOBALLY UNIQUE for ALL TARGETS. Even if you delete a target never reuse its ID
     TargetType: BREAK
     Material: STONE
     Data: -1
     Amount: 576
   place1:
-    On: false #Just a fail-safe for when the default targets are added
+    Enable: false #Just a fail-safe for when the default targets are added
     UniqueId: 3
     TargetType: PLACE #The type of this block target (BREAK, PLACE, etc.)
     Material: LOG
