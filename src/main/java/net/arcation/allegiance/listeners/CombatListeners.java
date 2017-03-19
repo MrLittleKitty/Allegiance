@@ -65,26 +65,26 @@ public class CombatListeners implements Listener, Runnable
 		}
 	}
 
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.LOW,ignoreCancelled = true)
 	public void onSomeoneThrowAPotion(PotionSplashEvent event)
 	{
 		if(event.getEntity().getShooter() instanceof Player)
 		{
 			Player attacker = (Player)event.getEntity().getShooter();
 
-			//Going to possibly removing multiple entites from the list if the player splashed multiple people
-			LinkedList<LivingEntity> entitiesToRemove = new LinkedList<>();
-			for(LivingEntity entity : event.getAffectedEntities())
+			Iterator<LivingEntity> itt = event.getAffectedEntities().iterator();
+			while(itt.hasNext())
 			{
+				LivingEntity entity = itt.next();
 				if(entity instanceof Player)
 				{
 					if(handleAttack(attacker, (Player) entity))
-						entitiesToRemove.add(entity);
+					{
+						event.setCancelled(true);
+						return;
+					}
 				}
 			}
-
-			if(!entitiesToRemove.isEmpty())
-				event.getAffectedEntities().removeAll(entitiesToRemove);
 		}
 	}
 
