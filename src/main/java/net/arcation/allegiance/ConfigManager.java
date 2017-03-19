@@ -4,7 +4,6 @@ import net.arcation.allegiance.targets.BlockTarget;
 import net.arcation.allegiance.targets.BlockTargetType;
 import net.arcation.allegiance.targets.PlaytimeTarget;
 import org.bukkit.Material;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,9 +37,19 @@ public class ConfigManager
 		return getOrSetDefault("PercentToPVP",100);
 	}
 
-	public int getAllowInventoryBreakingPercent()
+	public int getFightTimer()
 	{
-		return getOrSetDefault("PercentToBreakInventoryBlocks",100);
+		return getOrSetDefault("HowLongPlayerCanFightAfterBeingAttackedInSeconds",30);
+	}
+
+	public boolean getTagOnReinforcementDamage()
+	{
+		return getOrSetDefault("MakeFightableWhenDamagingReinforcements",true);
+	}
+
+	public int getAllowReinforcementDamagePercent()
+	{
+		return getOrSetDefault("PercentToDamageReinforcements",100);
 	}
 
 	public int getAllowBastionDamagePercent()
@@ -78,14 +87,16 @@ public class ConfigManager
 		return config.getInt(path);
 	}
 
-	public void checkDefaults()
+	void checkDefaults()
 	{
 		getAllowFirePercent();
 		getAllowPvpPercent();
-		getAllowInventoryBreakingPercent();
+		getAllowReinforcementDamagePercent();
 		getAllowBastionDamagePercent();
 		getPlayTimeUpdateTime();
 		getDetailedAllegiance();
+		getFightTimer();
+		getTagOnReinforcementDamage();
 	}
 
 	PlaytimeTarget getPlayTimeTarget()

@@ -28,7 +28,7 @@ public class BastionListeners implements Listener
 		Bukkit.getPluginManager().registerEvents(this,allegiance);
 	}
 
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onPlayerDamageBastion(BastionDamageEvent event)
 	{
 		PlayerData data = allegiance.getPlayer(event.getPlayer().getUniqueId());
