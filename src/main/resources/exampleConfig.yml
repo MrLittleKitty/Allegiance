@@ -41,4 +41,10 @@ blockTargets:
     Material: LOG
     Data: -1 #The data value for the material (or -1 if none). Ex: use a non -1 value if you care about LOG types
     Amount: 64 #The target amount. How much of this block they need to (BREAK,PLACE, etc.)
+#  place2All:
+#    UniqueId: 4
+#    TargetType: BREAK
+#    Material: ALL #This is an example of of the all type. Putting "all" makes this apply to every block break
+#    Data: -1
+#    Amount: 64
 
