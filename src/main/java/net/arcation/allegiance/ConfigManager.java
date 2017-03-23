@@ -107,10 +107,6 @@ public class ConfigManager
 			createDefaultPlayTimeTarget();
 			return null;
 		}
-		boolean on = playTimeSec.getBoolean("Enable");
-		if(!on)
-			return null;
-
 		int id = playTimeSec.getInt("UniqueId");
 		int amount = playTimeSec.getInt("TimeInMinutes");
 		return new PlaytimeTarget(id,amount);
@@ -132,9 +128,6 @@ public class ConfigManager
 		for(String key : blockTargets.getKeys(false))
 		{
 			ConfigurationSection targetSec = blockTargets.getConfigurationSection(key);
-			boolean on = targetSec.getBoolean("Enable");
-			if(!on)
-				continue;
 
 			int id = targetSec.getInt("UniqueId");
 			BlockTargetType type = BlockTargetType.valueOf(targetSec.getString("TargetType"));
@@ -154,7 +147,6 @@ public class ConfigManager
 	private void createDefaultPlayTimeTarget()
 	{
 		ConfigurationSection section = config.createSection("playTimeTarget");
-		section.set("Enable",false);
 		section.set("UniqueId",1);
 		section.set("TimeInMinutes",60*10); //10 hours
 		plugin.saveConfig();
@@ -166,7 +158,6 @@ public class ConfigManager
 
 		ConfigurationSection first = section.createSection("break1");
 
-		first.set("Enable", false);
 		first.set("UniqueId",2);
 		first.set("TargetType",BlockTargetType.BREAK.name());
 		first.set("Material", Material.STONE.name());
@@ -175,7 +166,6 @@ public class ConfigManager
 
 		ConfigurationSection second = section.createSection("place1");
 
-		second.set("Enable",false);
 		second.set("UniqueId",3);
 		second.set("TargetType",BlockTargetType.PLACE.name());
 		second.set("Material", Material.LOG.name());

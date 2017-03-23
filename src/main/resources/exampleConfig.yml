@@ -24,21 +24,18 @@ MakeFightableWhenDamagingReinforcements: true
 
 #The target for monitoring the playtime of players
 playTimeTarget:
-  Enable: false
   UniqueId: 1 #This needs to be GLOBALLY UNIQUE for ALL TARGETS.
   TimeInMinutes: 600 #How many minutes they need to play
 
 #Block targets for players
 blockTargets:
   break1: #The name at this level doesn't matter, just needs to be unique for each
-    Enable: false
     UniqueId: 2 #This ID needs to be GLOBALLY UNIQUE for ALL TARGETS. Even if you delete a target never reuse its ID
     TargetType: BREAK
     Material: STONE
     Data: -1
     Amount: 576
   place1:
-    Enable: false #Just a fail-safe for when the default targets are added
     UniqueId: 3
     TargetType: PLACE #The type of this block target (BREAK, PLACE, etc.)
     Material: LOG
