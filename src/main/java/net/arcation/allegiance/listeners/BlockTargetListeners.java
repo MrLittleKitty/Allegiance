@@ -57,7 +57,15 @@ public class BlockTargetListeners implements Listener
 		Map<Material,BlockTarget> map = targetMap.get(type);
 		if(map != null)
 		{
-			BlockTarget target = map.get(block.getType());
+			BlockTarget target = map.get(block.getType()); //Check if there is a target for this specific block
+			if(target != null)
+			{
+				PlayerData data = allegiance.getPlayer(uuid);
+				if(data.increaseTarget(target,1))
+					allegiance.announcePlayerAllegiance(Bukkit.getPlayer(uuid));
+			}
+
+			target = map.get(Material.AIR); //Check if there is an "all" target and increment if there is
 			if(target != null)
 			{
 				PlayerData data = allegiance.getPlayer(uuid);

@@ -107,9 +107,17 @@ public class ConfigManager
 			createDefaultPlayTimeTarget();
 			return null;
 		}
-		int id = playTimeSec.getInt("UniqueId");
-		int amount = playTimeSec.getInt("TimeInMinutes");
-		return new PlaytimeTarget(id,amount);
+		try
+		{
+			int id = playTimeSec.getInt("UniqueId");
+			int amount = playTimeSec.getInt("TimeInMinutes");
+			return new PlaytimeTarget(id,amount);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	Map<BlockTargetType,List<BlockTarget>> getBlockTargets()
@@ -125,20 +133,35 @@ public class ConfigManager
 		for(BlockTargetType t : BlockTargetType.values())
 			targets.put(t,new ArrayList<>());
 
-		for(String key : blockTargets.getKeys(false))
+
+		for (String key : blockTargets.getKeys(false))
 		{
-			ConfigurationSection targetSec = blockTargets.getConfigurationSection(key);
+			try
+			{
+				ConfigurationSection targetSec = blockTargets.getConfigurationSection(key);
 
-			int id = targetSec.getInt("UniqueId");
-			BlockTargetType type = BlockTargetType.valueOf(targetSec.getString("TargetType"));
-			Material material = Material.valueOf(targetSec.getString("Material"));
-			int data = targetSec.getInt("Data");
-			int amount = targetSec.getInt("Amount");
+				int id = targetSec.getInt("UniqueId");
+				BlockTargetType type = BlockTargetType.valueOf(targetSec.getString("TargetType"));
 
-			if(data > 0)
-				targets.get(type).add(new BlockTarget(id,type,amount,material,(byte)data));
-			else
-				targets.get(type).add(new BlockTarget(id,type, amount,material));
+				Material material;
+				String materialString = targetSec.getString("Material");
+				if (materialString.equalsIgnoreCase("all"))
+					material = Material.AIR;
+				else
+					material = Material.valueOf(materialString);
+
+				int data = targetSec.getInt("Data");
+				int amount = targetSec.getInt("Amount");
+
+				if (data > 0)
+					targets.get(type).add(new BlockTarget(id, type, amount, material, (byte) data));
+				else
+					targets.get(type).add(new BlockTarget(id, type, amount, material));
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 
 		return targets;
