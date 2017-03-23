@@ -116,11 +116,11 @@ public class Allegiance extends JavaPlugin implements Listener
 		unloadPlayer(event.getPlayer().getUniqueId());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
-    public void playerLeaveUnloadData(PlayerKickEvent event)
-    {
-		unloadPlayer(event.getPlayer().getUniqueId());
-    }
+//    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
+//    public void playerLeaveUnloadData(PlayerKickEvent event)
+//    {
+//		unloadPlayer(event.getPlayer().getUniqueId());
+//    }
 
     private void loadPlayer(UUID id)
 	{
