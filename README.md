@@ -3,7 +3,7 @@ A Minecraft plugin for managing a player's allegiance to the server. The plugin 
 
 # Releases
 
-Minecraft 1.10.2 --- [Release v1.0.1-pre](https://github.com/MrLittleKitty/Allegiance/releases/tag/v1.0.1-prerelease) (NEW!)
+Minecraft 1.10.2 --- [Release v1.0.2-pre](https://github.com/MrLittleKitty/Allegiance/releases/tag/v1.0.2-prerelease) (NEW!)
 
 # Commands
 

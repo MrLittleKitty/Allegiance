@@ -1,5 +1,5 @@
 name: Allegiance
-version: 1.0.1
+version: 1.0.2
 main: net.arcation.allegiance.Allegiance
 author: Mr_Little_Kitty
 softdepend: [Citadel, NameLayer, Bastion]
