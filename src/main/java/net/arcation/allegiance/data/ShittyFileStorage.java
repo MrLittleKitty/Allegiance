@@ -38,6 +38,12 @@ public class ShittyFileStorage implements DataStorage
                 {
                     while ((line = reader.readLine()) != null)
                     {
+                        if(line.equalsIgnoreCase("bypassed"))
+                        {
+                            data.setBypassed(true);
+                            continue;
+                        }
+
                         String[] split = line.split(":");
                         fromFile.put(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
                     }
@@ -74,6 +80,10 @@ public class ShittyFileStorage implements DataStorage
             {
                 for (Map.Entry<Target, Integer> entry : data.getTargetData().entrySet())
                     writer.write(entry.getKey().getId() + ":" + entry.getValue() + System.lineSeparator());
+
+                if(data.isBypassed())
+                    writer.write("bypassed");
+
                 writer.flush();
             }
         }
