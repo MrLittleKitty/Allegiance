@@ -4,12 +4,14 @@ import net.arcation.allegiance.Allegiance;
 import net.arcation.allegiance.Lang;
 import net.arcation.allegiance.data.PlayerData;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityCombustByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 
@@ -61,9 +63,33 @@ public class CombatListeners implements Listener, Runnable
 		{
 			Projectile projectile = (Projectile)event.getDamager();
 			if(projectile.getShooter() instanceof Player)
-				event.setCancelled(handleAttack((Player)projectile.getShooter(),(Player)event.getEntity()));
+            {
+                boolean shouldCancel = handleAttack((Player) projectile.getShooter(), (Player) event.getEntity());
+                if(shouldCancel)
+                {
+                    event.setCancelled(true);
+                    projectile.setFireTicks(0);
+                }
+            }
 		}
 	}
+
+    @EventHandler(priority = EventPriority.LOW,ignoreCancelled = true)
+    public void onSomeoneGetShotByAFireArrow(EntityCombustByEntityEvent event)
+    {
+        if(event.getEntity().getType() == EntityType.PLAYER && event.getCombuster().getType() == EntityType.ARROW)
+        {
+            Projectile attackerArrow = (Projectile)event.getCombuster();
+            if(attackerArrow.getShooter() instanceof Player)
+            {
+                Player attacker = (Player)attackerArrow.getShooter();
+                Player target = (Player) event.getEntity();
+
+                if (handleAttack(attacker, target))
+                    event.setCancelled(true);
+            }
+        }
+    }
 
 	@EventHandler(priority = EventPriority.LOW,ignoreCancelled = true)
 	public void onSomeoneThrowAPotion(PotionSplashEvent event)
