@@ -1,5 +1,6 @@
 package net.arcation.allegiance.targets;
 
+import net.arcation.allegiance.AllegianceInfo;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -49,14 +50,15 @@ public class BlockTarget extends Target
 	}
 
 	@Override
-	public String getCompletionString(int value)
+	public String getCompletionString(int value, AllegianceInfo info)
 	{
-		String materialString = material == Material.AIR ? "any block" : (data == -1 ? material.toString() : material.toString() + ":" + data);
-		String builder = ChatColor.GREEN+String.format("%s ",type.getPastTenseString()) + ChatColor.WHITE+ value + "/" + amount
-				+ ChatColor.GREEN +" blocks of type " + materialString +
-				". " + ChatColor.WHITE+Target.format.format(getPercentCompleted(value) * 100) +
-				"%" + ChatColor.GREEN+" complete.";
-		return builder;
+        String materialString = material == Material.AIR ? "any block" : (data == -1 ? material.toString() : material.toString() + ":" + data);
+	    if(info == AllegianceInfo.DETAILED)
+        {
+            String builder = ChatColor.GREEN + String.format("%s ", type.getPastTenseString()) + ChatColor.WHITE + value + "/" + amount + ChatColor.GREEN + " blocks of type " + materialString + ". " + ChatColor.WHITE + Target.format.format(getPercentCompleted(value) * 100) + "%" + ChatColor.GREEN + " complete.";
+            return builder;
+        }
+        return ChatColor.GREEN + String.format("%s ", type.getPastTenseString()) + "blocks of type " + materialString + ": "+((value > amount ? ChatColor.GREEN+("Completed") : ChatColor.RED+("Incomplete")));
 	}
 
 	public Material getMaterial()

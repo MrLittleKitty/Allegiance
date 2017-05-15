@@ -1,5 +1,6 @@
 package net.arcation.allegiance.targets;
 
+import net.arcation.allegiance.AllegianceInfo;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -24,7 +25,7 @@ public abstract class Target
 
     public abstract int increase(int value, int increaseValue);
 
-    public abstract String getCompletionString(int value);
+    public abstract String getCompletionString(int value, AllegianceInfo info);
 
     public int getId()
     {

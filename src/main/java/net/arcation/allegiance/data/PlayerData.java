@@ -1,5 +1,6 @@
 package net.arcation.allegiance.data;
 
+import net.arcation.allegiance.AllegianceInfo;
 import net.arcation.allegiance.targets.Target;
 
 import java.util.EnumMap;
@@ -39,13 +40,13 @@ public class PlayerData
         this.bypassed = bypassed;
     }
 
-    public String[] getTargetStrings()
+    public String[] getTargetStrings(AllegianceInfo info)
     {
         String[] str = new String[targets.size()];
         int i = 0;
         for(Map.Entry<Target,Integer> entry : targets.entrySet())
         {
-            str[i] = entry.getKey().getCompletionString(entry.getValue());
+            str[i] = entry.getKey().getCompletionString(entry.getValue(),info);
             i++;
         }
         return str;

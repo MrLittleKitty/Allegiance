@@ -11,7 +11,8 @@ PercentToDamageReinforcements: 100
 PercentToDamageBastions: 100
 
 #Whether or not players get told exactly how much of each target they have completed
-DetailedAllegianceInfo: false
+#Possible values: Detailed, Complete, Off
+DetailedAllegianceInfo: Off
 
 #The percent of allegiance a player needs to have to attack another player first
 PercentToPVP: 100

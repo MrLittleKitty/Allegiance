@@ -19,9 +19,9 @@ import java.util.Map;
 public class ConfigManager
 {
 	private final FileConfiguration config;
-	private final JavaPlugin plugin;
+	private final Allegiance plugin;
 
-	ConfigManager(JavaPlugin plugin)
+	ConfigManager(Allegiance plugin)
 	{
 		this.plugin = plugin;
 		this.config = plugin.getConfig();
@@ -57,9 +57,20 @@ public class ConfigManager
 		return getOrSetDefault("PercentToDamageBastions",100);
 	}
 
-	boolean getDetailedAllegiance()
+	AllegianceInfo getDetailedAllegiance()
 	{
-		return getOrSetDefault("DetailedAllegianceInfo",false);
+		String value = getOrSetDefault("DetailedAllegianceInfo",AllegianceInfo.OFF.name());
+		AllegianceInfo info;
+		try
+        {
+            info = AllegianceInfo.valueOf(value.toUpperCase());
+        }
+        catch(Exception e)
+        {
+            info = AllegianceInfo.OFF;
+            plugin.log("ERROR: DetailedAllegianceInfo in the config is set to a wrong value!");
+        }
+        return info;
 	}
 
 	int getPlayTimeUpdateTime()
@@ -86,6 +97,16 @@ public class ConfigManager
 		}
 		return config.getInt(path);
 	}
+
+	private String getOrSetDefault(String path, String defaultValue)
+    {
+        if(!config.isSet(path))
+        {
+            config.set(path,defaultValue);
+            plugin.saveConfig();
+        }
+        return config.getString(path);
+    }
 
 	void checkDefaults()
 	{

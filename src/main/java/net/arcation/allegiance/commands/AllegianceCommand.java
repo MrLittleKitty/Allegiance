@@ -1,6 +1,7 @@
 package net.arcation.allegiance.commands;
 
 import net.arcation.allegiance.Allegiance;
+import net.arcation.allegiance.AllegianceInfo;
 import net.arcation.allegiance.Lang;
 import net.arcation.allegiance.data.PlayerData;
 import net.arcation.allegiance.targets.Target;
@@ -16,9 +17,9 @@ import org.bukkit.entity.Player;
 public class AllegianceCommand implements CommandExecutor
 {
 	private final Allegiance allegiance;
-	private final boolean detailedInfo;
+	private final AllegianceInfo detailedInfo;
 
-	public AllegianceCommand(Allegiance allegiance, boolean detailedAllegianceInfo)
+	public AllegianceCommand(Allegiance allegiance, AllegianceInfo detailedAllegianceInfo)
 	{
 		this.allegiance = allegiance;
 		this.detailedInfo = detailedAllegianceInfo;
@@ -89,7 +90,7 @@ public class AllegianceCommand implements CommandExecutor
 						sender.sendMessage(String.format("Player [" + player.getName() + "] is %s%% allegiant.", data.getRoundedAllegiantPercent()));
 						if(args.length > 1 && args[1].equalsIgnoreCase("info"))
 						{
-							String[] messages = data.getTargetStrings();
+							String[] messages = data.getTargetStrings(AllegianceInfo.DETAILED);
 							for(int i = 0; i < messages.length; i++)
 								messages[i] = "["+player.getName()+"] "+messages[i];
 							sender.sendMessage(messages);
@@ -130,8 +131,8 @@ public class AllegianceCommand implements CommandExecutor
 		else
 		{
 			sender.sendMessage(String.format(Lang.UserNotAllegiant,data.getRoundedAllegiantPercent()));
-			if(detailedInfo)
-				sender.sendMessage(data.getTargetStrings());
+			if(detailedInfo != AllegianceInfo.OFF)
+				sender.sendMessage(data.getTargetStrings(detailedInfo));
 		}
 
 		return true;

@@ -1,5 +1,6 @@
 package net.arcation.allegiance.targets;
 
+import net.arcation.allegiance.AllegianceInfo;
 import org.bukkit.ChatColor;
 
 /**
@@ -37,9 +38,11 @@ public class PlaytimeTarget extends Target
 	}
 
 	@Override
-	public String getCompletionString(int value)
+	public String getCompletionString(int value, AllegianceInfo info)
 	{
-		return String.format(ChatColor.GREEN+"Played "+ ChatColor.WHITE+"%s/%s"+ChatColor.GREEN +" minutes. "+ChatColor.WHITE+"%s%%"+ChatColor.GREEN +" complete.",value,minutesRequired,Target.format.format(getPercentCompleted(value)*100));
+	    if(info == AllegianceInfo.DETAILED)
+		    return String.format(ChatColor.GREEN+"Played "+ ChatColor.WHITE+"%s/%s"+ChatColor.GREEN +" minutes. "+ChatColor.WHITE+"%s%%"+ChatColor.GREEN +" complete.",value,minutesRequired,Target.format.format(getPercentCompleted(value)*100));
+	    return String.format(ChatColor.GREEN+"Minutes played: %s",(value > minutesRequired ? ChatColor.GREEN+("Completed") : ChatColor.RED+("Incomplete")) );
 	}
 
 	public int getMinutesRequired()
