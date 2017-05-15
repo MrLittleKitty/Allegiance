@@ -1,12 +1,12 @@
 package net.arcation.allegiance.data;
 
 import net.arcation.allegiance.targets.Target;
+import net.arcation.allegiance.util.Pair;
+import org.bukkit.Bukkit;
+import vg.civcraft.mc.citadel.command.commands.Off;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by ewolfe on 3/16/2017.
@@ -90,6 +90,46 @@ public class ShittyFileStorage implements DataStorage
         catch (IOException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Iterator<Pair<UUID,PlayerData>> getAllStroredDataIterator(List<Target> targets)
+    {
+        return new OfflineIterator(targets);
+    }
+
+    private class OfflineIterator implements Iterator<Pair<UUID,PlayerData>>
+    {
+        private final List<Target> targets;
+        private final File[] files;
+        private int index;
+
+        public OfflineIterator(List<Target> targets)
+        {
+            this.targets = targets;
+            files = storageLocation.listFiles();
+            index = -1;
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return index < files.length-1;
+        }
+
+        @Override
+        public Pair<UUID, PlayerData> next()
+        {
+            index++;
+            if(index >= files.length)
+                return null;
+            File file = files[index];
+            String uuidName = file.getName();
+            uuidName = uuidName.substring(0,uuidName.indexOf('.'));
+            UUID uuid = UUID.fromString(uuidName);
+            PlayerData data = loadPlayerData(uuid,targets);
+            return new Pair<UUID,PlayerData>(uuid,data);
         }
     }
 }

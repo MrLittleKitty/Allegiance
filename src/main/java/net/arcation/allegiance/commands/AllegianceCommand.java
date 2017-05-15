@@ -5,11 +5,18 @@ import net.arcation.allegiance.AllegianceInfo;
 import net.arcation.allegiance.Lang;
 import net.arcation.allegiance.data.PlayerData;
 import net.arcation.allegiance.targets.Target;
+import net.arcation.allegiance.util.Pair;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by Mr_Little_Kitty on 3/1/2017.
@@ -58,6 +65,72 @@ public class AllegianceCommand implements CommandExecutor
 					else sender.sendMessage("You didn't provide enough arguments to use this command.");
 				}
 			}
+            else if(args[0].equalsIgnoreCase("scan"))
+            {
+                if(!(sender instanceof Player) || sender.isOp())
+                {
+                    UUID highPlayer = null;
+                    PlayerData highestData = null;
+                    double highestPercent = 0;
+                    if(args.length > 1 && args[1].equalsIgnoreCase("all"))
+                    {
+                        Iterator<Pair<UUID,PlayerData>> intensiveIterator = allegiance.hOLYFUCK_ThisGetsAllJoinedPlayersDataAndIsIntensive();
+                        while(intensiveIterator.hasNext())
+                        {
+                            Pair<UUID,PlayerData> entry = intensiveIterator.next();
+                            double newPercent = entry.getTwo().getAllegiantPercent();
+                            if(newPercent > highestPercent)
+                            {
+                                highestPercent = newPercent;
+                                highestData = entry.getTwo();
+                                highPlayer = entry.getOne();
+                            }
+                        }
+
+                        OfflinePlayer player = Bukkit.getOfflinePlayer(highPlayer);
+                        sender.sendMessage(String.format("Player [" + player.getName() + "] is %s%% allegiant and is the highest EVER!!.", highestData.getRoundedAllegiantPercent()));
+                        String[] messages = highestData.getTargetStrings(AllegianceInfo.DETAILED);
+                        for(int i = 0; i < messages.length; i++)
+                            messages[i] = "["+player.getName()+"] "+messages[i];
+                        sender.sendMessage(messages);
+                    }
+                    else
+                    {
+                        Set<Map.Entry<UUID,PlayerData>> playerData =  allegiance.getOnlinePlayersData();
+                        if(playerData.size() > 0)
+                        {
+                            for (Map.Entry<UUID, PlayerData> entry : playerData)
+                            {
+                                double newPercent = entry.getValue().getAllegiantPercent();
+                                if (newPercent > highestPercent)
+                                {
+                                    highestPercent = newPercent;
+                                    highestData = entry.getValue();
+                                    highPlayer = entry.getKey();
+                                }
+                            }
+
+                            Player player = Bukkit.getPlayer(highPlayer);
+                            if (player == null)
+                            {
+                                sender.sendMessage("ERROR: A dumb thing happened. Try again.");
+                                return true;
+                            }
+
+                            sender.sendMessage(String.format("Player [" + player.getName() + "] is %s%% allegiant and is the highest online.", highestData.getRoundedAllegiantPercent()));
+                            String[] messages = highestData.getTargetStrings(AllegianceInfo.DETAILED);
+                            for (int i = 0; i < messages.length; i++)
+                                messages[i] = "[" + player.getName() + "] " + messages[i];
+                            sender.sendMessage(messages);
+                        }
+                        else
+                        {
+                            sender.sendMessage("There are no online players to scan.");
+                            return true;
+                        }
+                    }
+                }
+            }
 			else
 			{
 				if(!(sender instanceof Player) || sender.isOp())

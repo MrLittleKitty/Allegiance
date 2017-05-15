@@ -11,6 +11,7 @@ import net.arcation.allegiance.targets.BlockTarget;
 import net.arcation.allegiance.targets.BlockTargetType;
 import net.arcation.allegiance.targets.PlaytimeTarget;
 import net.arcation.allegiance.targets.Target;
+import net.arcation.allegiance.util.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -116,11 +117,10 @@ public class Allegiance extends JavaPlugin implements Listener
 		unloadPlayer(event.getPlayer().getUniqueId());
     }
 
-//    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
-//    public void playerLeaveUnloadData(PlayerKickEvent event)
-//    {
-//		unloadPlayer(event.getPlayer().getUniqueId());
-//    }
+    public Iterator<Pair<UUID,PlayerData>> hOLYFUCK_ThisGetsAllJoinedPlayersDataAndIsIntensive()
+    {
+        return storage.getAllStroredDataIterator(targets);
+    }
 
     private void loadPlayer(UUID id)
 	{
@@ -136,6 +136,11 @@ public class Allegiance extends JavaPlugin implements Listener
     public PlayerData getPlayer(UUID id)
     {
         return playerCache.get(id);
+    }
+
+    public Set<Map.Entry<UUID,PlayerData>> getOnlinePlayersData()
+    {
+        return playerCache.entrySet();
     }
 
     public List<Target> getTargets()
