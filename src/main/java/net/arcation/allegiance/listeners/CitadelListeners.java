@@ -10,6 +10,8 @@ import org.bukkit.event.Listener;
 import vg.civcraft.mc.citadel.events.ReinforcementDamageEvent;
 import vg.civcraft.mc.citadel.reinforcement.PlayerReinforcement;
 
+import java.util.UUID;
+
 /**
  * Created by Mr_Little_Kitty on 3/15/2017.
  */
@@ -39,7 +41,8 @@ public class CitadelListeners implements Listener
 		if(event.getPlayer() == null)
 			return;
 
-		PlayerData data = allegiance.getPlayer(event.getPlayer().getUniqueId());
+		UUID id = event.getPlayer().getUniqueId();
+		PlayerData data = allegiance.getPlayer(id);
 
 		//If they arent bypassed, arent completely allegiant, and dont meet the percent requirement, stop the event
 		if(!data.isBypassed() && !data.isAllegiant() && data.getRoundedAllegiantPercent() < allowDamagePercent)
@@ -54,7 +57,10 @@ public class CitadelListeners implements Listener
 		if(combatListeners != null && event.getReinforcement() instanceof PlayerReinforcement)
 		{
 			PlayerReinforcement reinforcement = (PlayerReinforcement)event.getReinforcement();
-			combatListeners.playerDamagedReinforcement(event.getPlayer(),reinforcement.getGroup().getAllMembers());
+
+			//If the player that breaks the block isn't on the group then put them in combat
+			if(!reinforcement.getGroup().isCurrentMember(id))
+				combatListeners.playerDamagedReinforcement(event.getPlayer(),reinforcement.getGroup().getAllMembers());
 		}
 	}
 
